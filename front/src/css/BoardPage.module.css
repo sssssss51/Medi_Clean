@@ -1,0 +1,101 @@
+.container {
+  width: 100%;
+  padding: 50px 200px;
+}
+
+.h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  align-items: center;
+}
+
+.inputGroup {
+  width: 100%;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-weight: 700;
+}
+
+.inputGroup input {
+  width: 75%;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 0;
+}
+
+.inputGroup input::placeholder {
+  font-size: 12px;
+  color: #aaa; 
+}
+
+.inputGroup input:focus {
+  outline: 1px solid #000;
+}
+
+.inputGroup textarea {
+  border-radius: 0;
+  height: 200px;
+  width: 75%;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.inputGroup textarea:focus {
+  outline: 1px solid #000;
+}
+
+.rating {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.stars{
+  width: 75%;
+}
+
+.star {
+  font-size: 30px; /* 별 아이콘 크기 */
+  cursor: pointer;
+  color: #ccc; /* 기본 색상 */
+}
+
+.star.filled {
+  color: #ffcc00; /* 선택된 별 색상 */
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #51ac15;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 30%;
+  border-radius: 50px;
+}
+
+button:hover {
+  background-color: #3a7910;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+}

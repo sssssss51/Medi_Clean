@@ -1,0 +1,7 @@
+# 백엔드와 프론트엔드 각각의 .env 파일 무시
+/back/.env
+/front/.env
+
+# node_modules도 무시
+/back/node_modules
+/front/node_modules
