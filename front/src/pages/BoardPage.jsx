@@ -1,24 +1,50 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import styles from '../css/BoardPage.module.css';
 import Header from '../components/Header';
 
 const BoardPage = () => {
-  const [name, setName] = useState('');
+  const [gender, setGender] = useState('');
+  const [age, setAge] = useState('');
   const [title, setTitle] = useState('');
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 후기를 제출하는 로직 (예: API 호출)
-    console.log({ name, review, rating });
-    // 입력 필드 초기화
-    setName('');
-    setTitle('');
-    setReview('');
-    setRating(0);
+  
+    if (!gender || !age || !title || !review || rating === 0) {
+      alert('모든 항목을 입력해주세요');
+      return;
+    }
+  
+    try {
+      const response = await axios.post('/api/reviews', {
+        gender,
+        age,
+        title,
+        review,
+        rating,
+      });
+  
+      // API 응답의 success 속성 확인
+      if (response.data.success) {
+        alert('정상적으로 제출되었습니다.');
+        // 입력 필드 초기화
+        setGender('');
+        setAge('');
+        setTitle('');
+        setReview('');
+        setRating(0);
+      } else {
+        alert('후기 제출에 실패했습니다: ' + response.data.message);
+      }
+    } catch (error) {
+      console.error('후기 제출 실패:', error);
+      alert('후기 제출에 실패했습니다. 다시 시도해주세요.');
+    }
   };
-
+  
   return (
     <>
       <Header />
@@ -26,15 +52,43 @@ const BoardPage = () => {
       <h2 className={styles.h2}>후기 및 건의사항</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
-          <label className={styles.label} htmlFor="name">별명</label>
-          <input
-            type="text"
-            id="name"
-            placeholder='10글자 이내'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <span className={styles.label}>성별</span>
+            <div className={styles.genderCheckboxes}>
+              <label className={styles.genderLabel}>
+                <input
+                  type="checkbox"
+                  checked={gender === 'M'}
+                  onChange={() => setGender(gender === 'M' ? '' : 'M')}
+                />
+                남
+              </label>
+              <label className={styles.genderLabel}>
+                <input
+                  type="checkbox"
+                  checked={gender === 'F'}
+                  onChange={() => setGender(gender === 'F' ? '' : 'F')}
+                />
+                여
+              </label>
+            </div>
+        </div>
+        <div className={styles.inputGroup}>
+          <label className={styles.label} htmlFor="age">연령</label>
+          <div className={styles.widthBox}>
+            <select
+              className={styles.ageBox}
+              id="age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+              >
+                <option value="" disabled>나이대 선택</option>
+                <option value="20">20대</option>
+                <option value="30">30대</option>
+                <option value="40">40대</option>
+                <option value="50">50대 이상</option>
+            </select>
+          </div>
         </div>
         <div className={styles.inputGroup}>
           <label className={styles.label} htmlFor="title">제목</label>
@@ -57,7 +111,7 @@ const BoardPage = () => {
         </div>
         <div className={styles.rating}>
           <span className={styles.label}>별점</span>
-          <div className={styles.stars}>
+          <div className={styles.widthBox}>
             {[1, 2, 3, 4, 5].map((star) => (
               <span
                 key={star}
@@ -69,7 +123,7 @@ const BoardPage = () => {
             ))}
           </div>
         </div>
-        <button type="submit">제출하기</button>
+        <button type="submit" className={styles.submit}>제출하기</button>
       </form>
     </div>
     </>

@@ -63,22 +63,22 @@
   margin-bottom: 15px;
 }
 
-.stars{
+.widthBox{
   width: 75%;
 }
 
 .star {
-  font-size: 30px; /* 별 아이콘 크기 */
+  font-size: 30px;
   cursor: pointer;
-  color: #ccc; /* 기본 색상 */
+  color: #ccc;
 }
 
 .star.filled {
-  color: #ffcc00; /* 선택된 별 색상 */
+  color: #ffcc00;
 }
 
-button {
-  margin-top: 20px;
+.submit {
+  margin-top: 10px;
   padding: 10px 15px;
   background-color: #51ac15;
   color: white;
@@ -94,8 +94,35 @@ button:hover {
   background-color: #3a7910;
 }
 
+.genderCheckboxes {
+  display: flex;
+  width: 75%;
+}
+
+.genderLabel {
+  display: flex;
+  margin-right: 30px;
+  align-items: center;
+}
+
+.genderLabel input {
+  margin-right: 3px;
+  accent-color: #51ac15;
+}
+
+.ageBox {
+  padding: 5px;
+  color: black;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 20px;
+  }
+
+  .ageBox {
+    padding: 10px;
   }
 }
