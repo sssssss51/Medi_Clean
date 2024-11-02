@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../config/axiosConfig';
 import styles from '../css/BoardPage.module.css';
 import Header from '../components/Header';
 
@@ -19,7 +19,7 @@ const BoardPage = () => {
     }
   
     try {
-      const response = await axios.post('/api/reviews', {
+      const response = await axios.post('/api/review', {
         gender,
         age,
         title,
