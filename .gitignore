@@ -1,7 +1,26 @@
-# 백엔드와 프론트엔드 각각의 .env 파일 무시
-/back/.env
-/front/.env
+# Node.js 의존성 폴더
+node_modules/
+front/node_modules/
+back/node_modules/
 
-# node_modules도 무시
-/back/node_modules
-/front/node_modules
+# 빌드 폴더 (프론트엔드의 컴파일 결과)
+front/build/
+
+# 환경 변수 파일
+*.env
+
+# 로그 파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS나 Linux 시스템 생성 파일
+.DS_Store
+Thumbs.db
+
+# 기타 IDE나 편집기 관련 설정 파일 (필요에 따라 추가)
+.vscode/
+.idea/
+
+#DB
+back/phpmyadmin/
