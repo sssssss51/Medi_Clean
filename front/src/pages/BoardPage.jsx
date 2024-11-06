@@ -29,7 +29,7 @@ const BoardPage = () => {
   
       // API 응답의 success 속성 확인
       if (response.data.success) {
-        alert('정상적으로 제출되었습니다.');
+        alert('정상적으로 제출되었습니다\n 작성해주셔서 감사합니다!');
         // 입력 필드 초기화
         setGender('');
         setAge('');

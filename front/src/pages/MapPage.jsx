@@ -1,50 +1,94 @@
 import React, { useEffect, useState } from 'react';
+import Header from '../components/Header';
 
 const MapPage = () => {
+  const [map, setMap] = useState(null);
+  const [position, setPosition] = useState(null); // 위치 기본값 삭제
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
-    const [map, setMap] = useState(null);
-    const DEFAULT_LAT = 37.497625203; // 기본 위도
-    const DEFAULT_LNG = 127.03088379; // 기본 경도
+  // 사용자 위치 설정
+  const setCenterToMyPosition = () => {
+    if (map && position) {
+      map.setCenter(new window.kakao.maps.LatLng(position.lat, position.lng));
+    }
+  };
 
-    useEffect(() => {
+  // 위치 추적
+  useEffect(() => {
+    const getCurrentLocation = () => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          setPosition({ lat: latitude, lng: longitude });
+          setIsLoading(false); // 위치를 가져오면 로딩 상태 종료
+        },
+        (err) => {
+          console.error("Error getting location: ", err);
+          setIsLoading(false); // 오류 발생 시에도 로딩 상태 종료
+        }
+      );
+    };
 
-        // 카카오 맵 로드 함수 정의
-        const loadKaKaoMap = () => {
-            if (!window.kakao || !window.kakao.maps) {
-                console.error('Kakao maps not loaded');
-                return;
-            }
+    navigator.geolocation.watchPosition((pos) => {
+      const { latitude, longitude } = pos.coords;
+      setPosition({ lat: latitude, lng: longitude });
+      if (map) {
+        map.setCenter(new window.kakao.maps.LatLng(latitude, longitude));
+      }
+    });
 
-            window.kakao.maps.load(() => {
-                const mapContainer = document.getElementById("map"); // 지도 렌더링 할 요소 선택
-                const mapOption = {
-                    center: new window.kakao.maps.LatLng(DEFAULT_LAT, DEFAULT_LNG), // 지도 중심점
-                    level: 3 // 확대 레벨
-                };
-                const mapInstance = new window.kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+    getCurrentLocation();
+  }, [map]);
 
-                setMap(mapInstance);
-            });
-        };
+  useEffect(() => {
+    if (position) {
+      const loadKaKaoMap = () => {
+        if (!window.kakao || !window.kakao.maps) {
+          console.error('Kakao maps not loaded');
+          return;
+        }
 
-        // 카카오맵 스크립트 추가
-        const script = document.createElement('script');
-        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAOMAP_KEY}&libraries=services&autoload=false`;
-        script.async = true;
-        script.onload = () => {
-            loadKaKaoMap();
-        };
-        document.head.appendChild(script);
+        window.kakao.maps.load(() => {
+          const mapContainer = document.getElementById("map");
+          const mapOption = {
+            center: new window.kakao.maps.LatLng(position.lat, position.lng),
+            level: 3,
+          };
+          const mapInstance = new window.kakao.maps.Map(mapContainer, mapOption);
 
-        // 스크립트 정리
-        return () => {
-            document.head.removeChild(script);
-        };
-    }, []);
+          setMap(mapInstance);
+        });
+      };
 
-    return (
-        <div id="map" style={{ width: '100%', height: '100vh' }}></div>
-    );
-}
+      const script = document.createElement('script');
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAOMAP_KEY}&libraries=services&autoload=false`;
+      script.async = true;
+      script.onload = () => {
+        loadKaKaoMap();
+      };
+      document.head.appendChild(script);
+
+      return () => {
+        document.head.removeChild(script);
+      };
+    }
+  }, [position]);
+
+  return (
+    <>
+      <Header />
+      {!isLoading && ( // 위치 로딩이 끝났을 때만 지도 표시
+        <div id="map" style={{ width: '100%', height: '100vh' }}>
+          <button 
+              onClick={setCenterToMyPosition} 
+              style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }}
+          >
+              현재 위치로 이동
+          </button>
+        </div>
+      )}
+    </>
+  );
+};
 
 export default MapPage;
