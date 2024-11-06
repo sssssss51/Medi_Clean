@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  background-color: #FFFFFF;
+}
+
+.mainContent {
+  flex-grow: 1;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sectionContentBox {
+  width: calc(100% - 20px);
+  padding: 20px 10px;
+  background-color: #F5F5F5;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  color: #51ac15;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.sectionText {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.findNearbyButton {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: #FF7F50;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-bottom: 20px; /* 간격 일정하게 */
+}
+
+.buttonContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 10%; /* 하단에서 10% 띄우기 */
+}
+
+.button {
+  padding: 15px;
+  background-color: #51ac15;
+  color: white;
+  font-size: 13px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 1.4;
+  height: 80px;
+}
+
+.buttonContainer .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: #51ac15;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 1.4;
+  height: 80px;
+  text-decoration: none; /* 링크 밑줄 제거 */
+}
+
+@media (max-width: 370px) {
+  .buttonContainer .button {
+    padding: 5px;
+    font-size: 14px;
+  }
+}

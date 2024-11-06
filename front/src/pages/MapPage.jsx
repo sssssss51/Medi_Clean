@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Header from '../components/Header';
+import styles from '../css/Map.module.css';
 import Papa from 'papaparse';
 
 const MapPage = () => {
@@ -20,7 +21,7 @@ const MapPage = () => {
     '/csv/인천광역시_동구.csv',
     '/csv/인천광역시_미추홀구.csv',
   ]);
-  const [currentInfoWindow, setCurrentInfoWindow] = useState(null); // 현재 열린 정보창을 추적
+  const infoWindowsRef = useRef([]);
 
   const setCenterToMyPosition = () => {
     if (map && position) {
@@ -82,25 +83,57 @@ const MapPage = () => {
                       map: mapInstance,
                     });
 
-                    // 정보창을 생성하고 마커 클릭 시 열도록 설정
-                    const content = `
-                      <div style="padding:5px;">
-                        <strong>설치장소명:</strong> ${location.설치장소명}<br/>
-                        <strong>소재지도로명주소:</strong> ${location.소재지도로명주소}
-                      </div>
-                    `;
-                    const infowindow = new window.kakao.maps.InfoWindow({
-                      content: content,
+                    // 커스텀 오버레이에 표시할 내용
+                    const overlayContent = document.createElement('div');
+                    overlayContent.classList.add(styles.infoWindowContent);
+
+                    // HTML 요소로 콘텐츠 구성
+                    const title = document.createElement('div');
+                    title.classList.add(styles.infoWindowTitle);
+                    title.textContent = location.설치장소명;
+
+                    const address = document.createElement('span');
+                    address.classList.add(styles.infoWindowText);
+                    address.textContent = location.소재지도로명주소;
+
+                    const separator = document.createElement('div');
+                    separator.classList.add(styles.separator);
+
+                    const closeBtn = document.createElement('img');
+                    closeBtn.src = '/close.png'; // public 폴더에 위치한 이미지 경로
+                    closeBtn.alt = '닫기'; // 이미지 설명
+                    closeBtn.classList.add(styles.closeImg);
+
+                    const titleAndCloseDiv = document.createElement('div');
+                    titleAndCloseDiv.classList.add(styles.titleAndCloseDiv);
+
+                    // title과 closeBtn을 부모 div에 추가
+                    titleAndCloseDiv.appendChild(title);
+                    titleAndCloseDiv.appendChild(closeBtn);
+
+                    // 부모 div를 overlayContent에 추가
+                    overlayContent.appendChild(titleAndCloseDiv);
+                    overlayContent.appendChild(address);
+                    overlayContent.appendChild(separator);
+
+                    // 커스텀 오버레이를 생성
+                    const customOverlay = new window.kakao.maps.CustomOverlay({
+                      position: markerPosition,
+                      content: overlayContent,
+                      yAnchor: 1, // 오버레이의 수직 정렬
                     });
 
-                    // 마커 클릭 시 정보창을 띄움
+                    // 마커 클릭 시 커스텀 오버레이 표시
                     window.kakao.maps.event.addListener(marker, 'click', () => {
-                      // 이전 정보창을 닫고 새로운 정보창을 열기
-                      if (currentInfoWindow) {
-                        currentInfoWindow.close();
-                      }
-                      infowindow.open(mapInstance, marker);
-                      setCurrentInfoWindow(infowindow); // 새로운 InfoWindow로 상태 갱신
+                      // 모든 오버레이를 닫고 새로운 오버레이를 열기
+                      infoWindowsRef.current.forEach((prevOverlay) => prevOverlay.setMap(null));
+                      customOverlay.setMap(mapInstance);
+                      infoWindowsRef.current.push(customOverlay);
+                    });
+
+                    // 닫기 버튼 클릭 시 커스텀 오버레이 닫기
+                    closeBtn.addEventListener('click', () => {
+                      customOverlay.setMap(null);
                     });
                   } else {
                     console.log('Invalid coordinates:', lat, lng);
@@ -124,7 +157,7 @@ const MapPage = () => {
         document.head.removeChild(script);
       };
     }
-  }, [position, csvFiles]); // 여기선 `currentInfoWindow`를 의존성 배열에 넣지 않음
+  }, [position, csvFiles]);
 
   return (
     <>

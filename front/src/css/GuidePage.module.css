@@ -1,0 +1,94 @@
+.mainContent {
+  padding: 20px;
+  text-align: center;
+}
+
+.mainContent h2 {
+  color: #51ac15;
+  margin-bottom: 17px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 220px;
+  text-align: center;
+}
+
+.card p {
+  font-size: 13px;
+}
+
+.card h4 {
+  color: #51ac15;
+  margin-bottom: 10px;
+}
+
+.indexSection {
+  color: black;
+  border-top: 2px solid #51ac15;
+  padding: 20px;
+  text-align: center;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+.findLocationBtn {
+  background-color: #FF7F50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px; /* 텍스트와 버튼 사이 간격 */
+}
+
+.menuButton {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #51ac15;
+}
+
+/* 기본 폰트 설정 */
+.header h1 {
+  font-size: 24px;
+}
+
+.mainContent h2 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.impo {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: red;
+}
+
+.card h4 {
+  font-size: 18px;
+}
+
+.card p {
+  font-size: 13px;
+}
+
+.indexSection {
+  font-size: 15px;
+}
+
+.findLocationBtn {
+  font-size: 16px;
+}

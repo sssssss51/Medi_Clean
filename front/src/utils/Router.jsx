@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import MainPage from '../pages/MainPage';
 import MapPage from '../pages/MapPage';
 import BoardPage from '../pages/BoardPage';
+import GuidePage from '../pages/GuidePage';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/boardPage',
         element: <BoardPage />, // 후기 작성 페이지
+      },
+      {
+        path: '/guidePage',
+        element: <GuidePage />, // 후기 작성 페이지
       },
     ],
   },

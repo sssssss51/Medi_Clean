@@ -1,4 +1,50 @@
-.mapContainer {
-  height: 100vh; /* 전체 높이 */
-  width: 100%; /* 전체 너비 */
+.infoWindowContent {
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.infoWindowTitle {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.infoWindowText {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.infoWindowContent .separator {
+  border-top: 1px solid #ddd;
+  margin: 5px 0;
+}
+
+.infoWindowContent .infoRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.infoWindowContent .infoRow div {
+  font-size: 12px;
+  color: #888;
+}
+
+.titleAndCloseDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.closeImg {
+  margin-bottom: 20px;
+  width: 12px; /* 이미지 크기 */
+  height: 12px; /* 이미지 크기 */
+  cursor: pointer;
 }

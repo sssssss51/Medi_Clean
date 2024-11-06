@@ -44,3 +44,13 @@
     padding: 5px;
   }
 }
+
+@media (max-width: 370px) {
+  .header {
+    padding: 2px;
+  }
+
+  .navItem {
+    padding: 10px 5px;
+  }
+}
