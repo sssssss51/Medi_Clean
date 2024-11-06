@@ -1,6 +1,6 @@
 const express = require('express'); // Express 모듈 가져오기
 const bodyParser = require('body-parser'); // 요청 본문 파싱을 위한 미들웨어
-const reviewRoutes = require('./routes/reviewRoutes'); // 라우트 파일 가져오기
+const Routes = require('./routes/Routes'); // 라우트 파일 가져오기
 const dotenv = require('dotenv'); // 환경 변수 관리
 const cors = require('cors'); // CORS 미들웨어
 const morgan = require('morgan'); // 요청 로깅 미들웨어
@@ -20,7 +20,7 @@ app.use(bodyParser.json()); // JSON 파싱을 위한 미들웨어
 app.use(morgan('dev')); // 요청 로깅 미들웨어
 
 // 라우트 설정
-app.use('/api', reviewRoutes);
+app.use('/api', Routes);
 
 // 에러 핸들링 미들웨어
 app.use((err, req, res, next) => {
