@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  padding: 20px;
+  padding-top: 20px;
   background-color: #FFFFFF;
 }
 
@@ -16,11 +16,10 @@
 }
 
 .sectionContentBox {
-  width: calc(100% - 20px);
+  width: 86%;
   padding: 20px 10px;
   background-color: #F5F5F5;
   border-radius: 10px;
-  margin-bottom: 20px;
   text-align: left;
 }
 
@@ -38,60 +37,188 @@
 }
 
 .findNearbyButton {
-  width: 100%;
+  width: 86%;
   padding: 20px;
   display: flex;
   justify-content: center;
   background-color: #FF7F50;
   color: white;
+  font-weight: 700;
   font-size: 18px;
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  margin-bottom: 20px; /* 간격 일정하게 */
+  margin: 20px 0 10px 0;
 }
 
 .buttonContainer {
+  width: 100%; /* 전체 가로로 확장 */
+  background-color: #bedda9; /* 연두색 배경 */
+  padding: 10px; /* 상위 div 패딩을 무시 */
+  margin: 0; /* 상위 div의 마진도 무시 */
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  width: 100%;
-  margin-bottom: 10%; /* 하단에서 10% 띄우기 */
+  grid-template-columns: 1fr 1fr; /* 2개씩 한 줄에 배치 */
+  gap: 10px; /* 버튼 간격 */
+  box-sizing: border-box; /* 패딩과 마진이 너비 계산에 포함되게 */
 }
 
 .button {
-  padding: 15px;
-  background-color: #51ac15;
-  color: white;
-  font-size: 13px;
-  border: none;
-  border-radius: 15px;
-  text-align: center;
-  cursor: pointer;
-  line-height: 1.4;
-  height: 80px;
-}
-
-.buttonContainer .button {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 15px;
-  background-color: #51ac15;
-  color: white;
+  background-color: white;
   font-size: 16px;
   border: none;
   border-radius: 15px;
-  text-align: center;
   cursor: pointer;
-  line-height: 1.4;
   height: 80px;
-  text-decoration: none; /* 링크 밑줄 제거 */
+  text-align: center;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 8px;
+}
+
+.footer {
+  width: 100%;
+  padding: 20px;
+  background-color: #e2e2e2;
+  color: #626262;
+  text-align: center;
+  font-size: 12px;
+  position: relative;
+  bottom: 0;
+  margin-top: auto;
+}
+
+.leftAlign {
+  text-align: left;
+}
+
+.centerAlign {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.logo {
+  margin: 20px 20px 0 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px; 
+}
+
+.bannerBox {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  width: 86%;
+}
+
+.bannerBox img {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.linkBox {
+  width: 100%;
+  margin-top: 20px;
+  background-color: #E4EDF4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.imgBox {
+  width: 86%;
+  height: 70px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 10px 0;
+}
+
+.ass2 {
+  width: 60%;
+  height: 80%;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+}
+
+.tab {
+  border: 1px solid #dddddd;
+  width: 86%;
+  padding: 5px 10px 5px 30px;
+  background-color: #ffffff;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  margin: 13px 0 20px 0;
+}
+
+.list {
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.regionLink {
+  color: rgb(0, 123, 255);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.regionList {
+  margin-bottom: 40px;
+  padding: 10px 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.regionList ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.regionList li {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.hiddenBtn {
+  font-size: 3px;
+  color: white;
+  background-color: white;
+  width: 10%;
+  border: none;
+}
+
+.hiddenBtn:hover {
+  color: white;
+  background-color: white;
+  border: none;
 }
 
 @media (max-width: 370px) {
   .buttonContainer .button {
     padding: 5px;
-    font-size: 14px;
+    font-size: 12px;
   }
 }

@@ -92,3 +92,9 @@
 .findLocationBtn {
   font-size: 16px;
 }
+
+@media (max-width: 370px) {
+  .card {
+    width: 80%;
+  }
+}

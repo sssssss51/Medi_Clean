@@ -4,6 +4,7 @@ import MainPage from '../pages/MainPage';
 import MapPage from '../pages/MapPage';
 import BoardPage from '../pages/BoardPage';
 import GuidePage from '../pages/GuidePage';
+import VideoPage from '../pages/VideoPage';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/guidePage',
-        element: <GuidePage />, // 후기 작성 페이지
+        element: <GuidePage />, // 분리배출표 페이지
+      },
+      {
+        path: '/videoPage',
+        element: <VideoPage />, // 분리배출표 페이지
       },
     ],
   },

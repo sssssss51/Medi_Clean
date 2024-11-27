@@ -95,6 +95,7 @@ const BoardPage = () => {
           <input
             type="text"
             id="title"
+            placeholder='20자 이내'
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required

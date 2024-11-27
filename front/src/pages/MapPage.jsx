@@ -6,10 +6,12 @@ import Papa from 'papaparse';
 const MapPage = () => {
   const [map, setMap] = useState(null);
   const [position, setPosition] = useState(null);
+  const [markers, setMarkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [csvFiles, setCsvFiles] = useState([
     '/csv/경기도_군포시.csv',
     '/csv/경기도_부천시.csv',
+    '/csv/경기도_안양시.csv',
     '/csv/경기도_양주시.csv',
     '/csv/경기도_용인시.csv',
     '/csv/경기도_평택시.csv',
@@ -23,9 +25,31 @@ const MapPage = () => {
   ]);
   const infoWindowsRef = useRef([]);
 
-  const setCenterToMyPosition = () => {
-    if (map && position) {
-      map.setCenter(new window.kakao.maps.LatLng(position.lat, position.lng));
+  // 현재 위치를 기준으로 가장 가까운 마커 찾기
+  const findNearestMarker = () => {
+    if (!position || markers.length === 0) return;
+
+    let nearestMarker = null;
+    let minDistance = Infinity;
+
+    markers.forEach(({ marker, lat, lng, overlay }) => {
+      const distance = Math.sqrt(
+        Math.pow(lat - position.lat, 2) + Math.pow(lng - position.lng, 2)
+      );
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestMarker = { marker, overlay };
+      }
+    });
+
+    if (nearestMarker) {
+      // 가장 가까운 마커로 지도 이동 및 오버레이 표시
+      const { marker, overlay } = nearestMarker;
+      map.setCenter(marker.getPosition());
+      infoWindowsRef.current.forEach((prevOverlay) => prevOverlay.setMap(null));
+      overlay.setMap(map);
+      infoWindowsRef.current.push(overlay);
     }
   };
 
@@ -59,12 +83,13 @@ const MapPage = () => {
           const mapContainer = document.getElementById('map');
           const mapOption = {
             center: new window.kakao.maps.LatLng(position.lat, position.lng),
-            level: 3,
+            level: 5,
           };
           const mapInstance = new window.kakao.maps.Map(mapContainer, mapOption);
           setMap(mapInstance);
 
-          // 각 CSV 파일을 비동기적으로 파싱하고 마커 생성
+          const tempMarkers = [];
+
           csvFiles.forEach((csvFile) => {
             Papa.parse(csvFile, {
               download: true,
@@ -75,7 +100,6 @@ const MapPage = () => {
                   const lat = parseFloat(location.위도);
                   const lng = parseFloat(location.경도);
 
-                  // 좌표 값이 올바른지 확인
                   if (!isNaN(lat) && !isNaN(lng)) {
                     const markerPosition = new window.kakao.maps.LatLng(lat, lng);
                     const marker = new window.kakao.maps.Marker({
@@ -123,22 +147,20 @@ const MapPage = () => {
                       yAnchor: 1, // 오버레이의 수직 정렬
                     });
 
-                    // 마커 클릭 시 커스텀 오버레이 표시
                     window.kakao.maps.event.addListener(marker, 'click', () => {
-                      // 모든 오버레이를 닫고 새로운 오버레이를 열기
                       infoWindowsRef.current.forEach((prevOverlay) => prevOverlay.setMap(null));
                       customOverlay.setMap(mapInstance);
                       infoWindowsRef.current.push(customOverlay);
                     });
 
-                    // 닫기 버튼 클릭 시 커스텀 오버레이 닫기
                     closeBtn.addEventListener('click', () => {
                       customOverlay.setMap(null);
                     });
-                  } else {
-                    console.log('Invalid coordinates:', lat, lng);
+
+                    tempMarkers.push({ marker, lat, lng, overlay: customOverlay });
                   }
                 });
+                setMarkers(tempMarkers);
               },
             });
           });
@@ -148,9 +170,7 @@ const MapPage = () => {
       const script = document.createElement('script');
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAOMAP_KEY}&libraries=services&autoload=false`;
       script.async = true;
-      script.onload = () => {
-        loadKaKaoMap();
-      };
+      script.onload = loadKaKaoMap;
       document.head.appendChild(script);
 
       return () => {
@@ -164,11 +184,11 @@ const MapPage = () => {
       <Header />
       {!isLoading && (
         <div id="map" style={{ width: '100%', height: '100vh' }}>
-          <button
-            onClick={setCenterToMyPosition}
-            style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }}
-          >
+          <button onClick={() => window.location.reload()} className={styles.locaBtn}>
             현재 위치로 이동
+          </button>
+          <button onClick={findNearestMarker} className={styles.findBtn}>
+            가까운 수거함 찾기
           </button>
         </div>
       )}
