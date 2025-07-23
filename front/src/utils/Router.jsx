@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
-`;
+`; // 웹사이트 모든 페이지 css (필수)
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         <Outlet /> {/* 자식 컴포넌트가 여기에 렌더링됨 */}
       </>
     ),
-    children: [
+    children: [ //아이들 = 자식 
       {
         path: '',
         element: <MainPage />, // 메인 페이지
